@@ -35,6 +35,7 @@ module.exports = {
             value: `${guild.memberCount}`,
           })
           .setTimestamp()
+          .setColor('Blurple')
           .setThumbnail(guild.iconURL());
         const welcomeChannel = member.guild.channels.cache.get(
           guildRecord.channel
