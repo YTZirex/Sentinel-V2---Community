@@ -11,7 +11,9 @@ module.exports = {
     if (!guildRecord) {
       const newGuildRecord = new welcomeSchema({
         guild: guild.id,
+        enabled: false,
         channel: "none",
+        message: "none",
         role: "none",
       });
       await newGuildRecord.save();
@@ -20,6 +22,7 @@ module.exports = {
 
     if (guildRecord) {
       guildRecord.guild = guild.id;
+      guildRecord.enabled = false;
       guildRecord.channel = "none";
       guildRecord.message = "none";
       guildRecord.role = "none";

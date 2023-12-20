@@ -56,7 +56,7 @@ module.exports = {
         .addFields(
           {
             name: "**Salon:**",
-            value: `<#${chosenChannel}>`,
+            value: `${chosenChannel}`,
             inline: true,
           },
           {
@@ -89,7 +89,7 @@ module.exports = {
         .addFields(
           {
             name: "**Salon:**",
-            value: `<#${chosenChannel}>`,
+            value: `${chosenChannel}`,
             inline: true,
           },
           {
