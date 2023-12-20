@@ -25,7 +25,7 @@ module.exports = {
       if (guildRecord.enabled == true) {
         try {
           const res = new EmbedBuilder()
-            .setTitle(`Bienvenue ${member}!`)
+            .setTitle(`Bienvenue ${member.username}!`)
             .setDescription(`${guildRecord.message}`)
             .setTimestamp()
             .setThumbnail(guild.iconURL());
