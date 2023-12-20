@@ -39,12 +39,12 @@ module.exports = {
       guild: interaction.guild.id,
     });
 
-    if (!interaction.guild.me.permissionsIn(chosenChannel.id).has(PermissionFlagsBits.SendMessages)) return interaction.reply({ 
+    if (!interaction.guild.members.me.permission.has(PermissionFlagsBits.SendMessages)) return interaction.reply({ 
         content: `Je n'ai pas la permission d'envoyer de message dans ce salon.`, 
         ephemeral: true
     })
 
-    if (!interaction.guild.me.hasPermission(PermissionFlagsBits.ManageRoles)) return interaction.reply({
+    if (!interaction.guild.members.me.permissions.has(PermissionFlagsBits.ManageRoles)) return interaction.reply({
         content: `Je n'ai pas la permission de gérer les rôles d'autres utilisateurs.`,
         ephemeral: true
     });

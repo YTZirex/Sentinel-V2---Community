@@ -23,21 +23,21 @@ module.exports = {
     } else {
       if (guildRecord.enabled == false) return;
       if (guildRecord.enabled == true) {
-        try {
           const res = new EmbedBuilder()
             .setTitle(`Bienvenue ${member.username}!`)
             .setDescription(`${guildRecord.message}`)
+            .addFields(
+              {
+                name: '**Membres:**',
+                value: `${guild.memberCount}`
+              }
+            )
             .setTimestamp()
             .setThumbnail(guild.iconURL());
-          guild.channels.cache.get(guildRecord.channel).send({
-            embeds: [res],
-          });
+          const welcomeChannel = member.guild.channels.cache.get(guildRecord.channel)
 
           member.roles.add(guildRecord.role);
-          return;
-        } catch (err) {
-          console.error(err);
-          return;
+          
         }
       }
     }
