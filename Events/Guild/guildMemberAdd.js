@@ -19,6 +19,7 @@ module.exports = {
         role: "none",
       });
       await newGuildRecord.save();
+      return;
     } else {
       if (guildRecord.enabled == false) return;
       if (guildRecord.enabled == true) {
