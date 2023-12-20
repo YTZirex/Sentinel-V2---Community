@@ -5,7 +5,8 @@ async function isUserPremium(userId) {
     "redeemedBy.id": userId.toString(),
   });
 
-  return codes.length > 0;
+  // Check if codes is truthy and has a length property
+  return codes && codes.length > 0;
 }
 
 module.exports = { isUserPremium };

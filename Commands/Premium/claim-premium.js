@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const { Code } = require("../../Models/CodeSchema");
+const { model, Schema } = require("mongoose");
+const Code = require("../../Models/CodeSchema");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -34,7 +35,7 @@ module.exports = {
           .setColor("Red")
           .setDescription(`Ce code a déjà été utilisé.`)
           .setTimestamp();
-        await interaction.reply({ embeds: [res], ephemeral: true });
+        await interaction.reply({ embeds: [embed], ephemeral: true });
         return;
       }
 
@@ -63,6 +64,7 @@ module.exports = {
         "30 jours": 30,
         "60 jours": 60,
         "90 jours": 90,
+        "permanent": 1826250,
       };
 
       const expirationLength =

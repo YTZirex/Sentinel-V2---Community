@@ -5,7 +5,7 @@ const {
 } = require("discord.js");
 
 module.exports = {
-  premiumOnly: false,
+  premiumOnly: true,
   data: new SlashCommandBuilder()
     .setName("8ball")
     .setDescription("Permet de demander au bot une question.")
