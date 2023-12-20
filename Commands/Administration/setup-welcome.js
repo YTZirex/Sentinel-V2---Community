@@ -82,7 +82,7 @@ module.exports = {
         );
       interaction.reply({
         embeds: [res],
-        ephemeral: true,
+        ephemeral: false,
       });
     } else {
       guildRecord.enabled = true;
@@ -115,7 +115,7 @@ module.exports = {
         );
       interaction.reply({
         embeds: [res],
-        ephemeral: true,
+        ephemeral: false,
       });
     }
   },
