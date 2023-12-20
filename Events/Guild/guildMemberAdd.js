@@ -1,4 +1,8 @@
-const { EmbedBuilder, GuildMember } = require("discord.js");
+const {
+  EmbedBuilder,
+  GuildMember,
+  PermissionFlagsBits,
+} = require("discord.js");
 const { models, Schema } = require("mongoose");
 const welcomeSchema = require("../../Models/Welcome");
 
@@ -23,23 +27,35 @@ module.exports = {
     } else {
       if (guildRecord.enabled == false) return;
       if (guildRecord.enabled == true) {
-          const res = new EmbedBuilder()
-            .setTitle(`Bienvenue ${member.username}!`)
-            .setDescription(`${guildRecord.message}`)
-            .addFields(
-              {
-                name: '**Membres:**',
-                value: `${guild.memberCount}`
-              }
-            )
-            .setTimestamp()
-            .setThumbnail(guild.iconURL());
-          const welcomeChannel = member.guild.channels.cache.get(guildRecord.channel)
-          welcomeChannel.send({
-            embeds: [res]
+        const res = new EmbedBuilder()
+          .setTitle(`Bienvenue ${member.username}!`)
+          .setDescription(`${guildRecord.message}`)
+          .addFields({
+            name: "**Membres:**",
+            value: `${guild.memberCount}`,
           })
+          .setTimestamp()
+          .setThumbnail(guild.iconURL());
+        const welcomeChannel = member.guild.channels.cache.get(
+          guildRecord.channel
+        );
+
+        if (
+          welcomeChannel
+            .permissionsFor(guild.members.me)
+            .has(PermissionFlagsBits.SendMessages)
+        ) {
+          welcomeChannel.send({
+            embeds: [res],
+          });
+        }
+        if (
+          guild.members.me.permissions.has(PermissionFlagsBits.ManageRoles) &&
+          guild.members.me.roles.highest.position < guildRecord.role.position
+        ) {
           member.roles.add(guildRecord.role);
         }
-        }
+      }
+    }
   },
 };
