@@ -25,7 +25,7 @@ module.exports = {
       await guildRecord.save();
       const res = new EmbedBuilder()
         .setTitle(`Module désactivé!`)
-        .setDescription(`Le module \`Bienvenue\` a été désactivé.\nPour activer le module, exécuter la commande `)
+        .setDescription(`Le module \`Bienvenue\` a été désactivé.\nPour activer le module, exécuter la commande </setup-welcome:1187086697427644477>`)
         .setTimestamp()
         .setColor("Red");
       await interaction.reply({
@@ -43,7 +43,7 @@ module.exports = {
       await newGuildRecord.save();
       const res = new EmbedBuilder()
         .setTitle(`Module désactivé!`)
-        .setDescription(`Le module \`Bienvenue\` a été désactivé.`)
+        .setDescription(`Le module \`Bienvenue\` a été désactivé.\nPour activer le module, exécuter la commande </setup-welcome:1187086697427644477>`)
         .setTimestamp()
         .setColor("Red");
       await interaction.reply({
