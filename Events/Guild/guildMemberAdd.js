@@ -35,11 +35,11 @@ module.exports = {
             .setTimestamp()
             .setThumbnail(guild.iconURL());
           const welcomeChannel = member.guild.channels.cache.get(guildRecord.channel)
-
+          welcomeChannel.send({
+            embeds: [res]
+          })
           member.roles.add(guildRecord.role);
-          
         }
-      }
-    }
+        }
   },
 };
