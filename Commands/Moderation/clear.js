@@ -1,4 +1,8 @@
-const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder } = require("discord.js");
+const {
+  SlashCommandBuilder,
+  PermissionFlagsBits,
+  EmbedBuilder,
+} = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -10,47 +14,50 @@ module.exports = {
         .setName("nombre")
         .setDescription("Nombre de messages à supprimer.")
         .setMinValue(1)
-        .setMaxValue(99)
+        .setMaxValue(98)
         .setRequired(true)
     )
     .addUserOption((option) =>
       option
         .setName("utilisateur")
-        .setDescription("Supprimer les messages d'un utilisateur spécifique.")
+        .setDescription(
+          "Permet de supprimer les messages d'un utilisateur spécifique."
+        )
         .setRequired(false)
     ),
   async execute(interaction) {
-    try {
-      await interaction.deferReply();
+    const user = interaction.user.id;
+    const target = interaction.options.getUser("utilisateur");
+    const amount = interaction.options.getInteger("nombre");
 
-      const { channel, options } = interaction;
-      const nombre = options.getInteger("nombre");
-      const utilisateur = options.getUser("utilisateur");
+    const messages = await interaction.channel.messages.fetch({
+      limit: amount + 1,
+    });
 
-      const messages = await channel.messages.fetch({ limit: nombre });
-      const messagesFiltres = utilisateur
-        ? messages.filter((msg) => msg.author.id === utilisateur.id)
-        : messages;
+    const res = new EmbedBuilder().setColor("Green");
 
-      const messagesFiltresASupprimer = messagesFiltres.filter(
-        (msg) => Date.now() - msg.createdTimestamp < 14 * 24 * 60 * 60 * 1000
-      );
+    if (target) {
+      let i = 0;
+      const filtered = [];
 
-      await channel.bulkDelete(messagesFiltresASupprimer, true);
+      (await messages).filter((msg) => {
+        if (msg.author.id === target.id && amount > i) {
+          filtered.push(msg);
+          i++;
+        }
+      });
 
-      const res = new EmbedBuilder().setColor("Green");
-      res.setDescription(
-        `J'ai supprimé ${messagesFiltresASupprimer.size} messages${utilisateur ? ` de ${utilisateur}` : ""}.`
-      );
-
-      await interaction.editReply({ embeds: [res] });
-    } catch (error) {
-      console.error(error);
-      const resError = new EmbedBuilder().setColor("Red");
-      resError.setDescription(
-        "Une erreur s'est produite. Veuillez réessayer plus tard."
-      );
-      await interaction.editReply({ embeds: [resError] });
+      await channel.bulkDelete(filtered).then((messages) => {
+        res.setDescription(
+          `J'ai supprimé ${messages.size} messages envoyés par ${target} !`
+        );
+        interaction.reply({ embeds: [res] });
+      });
+    } else {
+      await interaction.channel.bulkDelete(amount, true).then((messages) => {
+        res.setDescription(`J'ai supprimé ${messages.size} messages envoyés !`);
+        interaction.reply({ embeds: [res] });
+      });
     }
   },
 };
