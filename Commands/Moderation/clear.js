@@ -69,12 +69,12 @@ module.exports = {
           }
         });
 
-        clearEmbed.setDescription(
+        res.setDescription(
           `\`✅\` J'ai supprimé \`${messagesToDelete.length}\` ${multiMsg} de ${target} dans ce salon.`
         );
       } else {
         messagesToDelete = channelMessages.first(amount);
-        clearEmbed.setDescription(
+        res.setDescription(
           `\`✅\` J'ai supprimé \`${messagesToDelete.length}\` ${multiMsg} dans ce salon.`
         );
       }
