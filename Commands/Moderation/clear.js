@@ -47,14 +47,14 @@ module.exports = {
         }
       });
 
-      await channel.bulkDelete(filtered).then((messages) => {
+      await channel.bulkDelete(filtered).then(messages => {
         res.setDescription(
           `J'ai supprimé ${messages.size} messages envoyés par ${target} !`
         );
         interaction.reply({ embeds: [res] });
       });
     } else {
-      await interaction.channel.bulkDelete(amount, true).then((messages) => {
+      await interaction.channel.bulkDelete(amount, true).then(messages => {
         res.setDescription(`J'ai supprimé ${messages.size} messages envoyés !`);
         interaction.reply({ embeds: [res] });
       });
