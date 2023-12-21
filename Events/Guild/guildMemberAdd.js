@@ -15,7 +15,7 @@ module.exports = {
     });
 
     if (!guildRecord) {
-      const newGuildRecord = new welcoemSchema({
+      const newGuildRecord = new welcomeSchema({
         guild: guild.id,
         enabled: false,
         channel: "none",
@@ -28,17 +28,18 @@ module.exports = {
       if (guildRecord.enabled == false) return;
       if (guildRecord.enabled == true) {
         const res = new EmbedBuilder()
-          .setTitle(`Bienvenue ${member.username}!`)
+          .setTitle(`Bienvenue ${member.user.username}!`)
+          .setThumbnail(member.user.displayAvatarURL())
           .setDescription(`${guildRecord.message}`)
           .addFields({
             name: "**Membres:**",
             value: `${guild.memberCount}`,
           })
           .setTimestamp()
-          .setColor('Blurple')
+          .setColor("Blurple")
           .setThumbnail(guild.iconURL());
         const welcomeChannel = member.guild.channels.cache.get(
-          guildRecord.channel
+          guildRecord.channel,
         );
 
         if (
@@ -50,11 +51,12 @@ module.exports = {
             embeds: [res],
           });
         }
-        if (
-          guild.members.me.permissions.has(PermissionFlagsBits.ManageRoles) &&
-          guild.members.me.roles.highest.position < guildRecord.role.position
-        ) {
+
+        // Check if the role is set and not "none"
+        if (guild.members.me.permissions.has(PermissionFlagsBits.ManageRoles) && guild.members.me.roles.highest.position > guildRecord.role.position) {
           member.roles.add(guildRecord.role);
+        } else {
+          console.log('pas la perm')
         }
       }
     }

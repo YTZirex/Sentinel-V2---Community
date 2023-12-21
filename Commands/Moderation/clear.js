@@ -1,11 +1,5 @@
-const {
-  SlashCommandBuilder,
-  CommandInteraction,
-  PermissionFlagsBits,
-  EmbedBuilder,
-  Client
-} = require("discord.js");
-const client = Client;
+const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder } = require("discord.js");
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("clear")
@@ -26,39 +20,37 @@ module.exports = {
         .setRequired(false)
     ),
   async execute(interaction) {
-    const { channel, options } = interaction;
-    const nombre = options.getInteger("nombre");
-    const utilisateur = options.getUser("utilisateur");
+    try {
+      await interaction.deferReply();
 
-    const messages = await channel.messages.fetch({
-      limit: nombre + 1,
-    });
-    const res = new EmbedBuilder().setColor("Green");
-    
-    if (utilisateur) {
-      let i = 0;
-      const filtered = [];
+      const { channel, options } = interaction;
+      const nombre = options.getInteger("nombre");
+      const utilisateur = options.getUser("utilisateur");
 
-      (await messages).filter((msg) => {
-        if (msg.author.id === utilisateur.id && nombre > i) {
-          filtered.push(msg);
-          i++;
-        }
-      });
+      const messages = await channel.messages.fetch({ limit: nombre });
+      const messagesFiltres = utilisateur
+        ? messages.filter((msg) => msg.author.id === utilisateur.id)
+        : messages;
 
-      await channel.bulkDelete(filtered).then((messages) => {
-        res.setDescription(
-          `J'ai supprimé ${messages.size} messages de ${utilisateur}.`
-        );
-        interaction.reply({ embeds: [res] });
-      });
-    } else {
-      await channel.bulkDelete(nombre, true).then((messages) => {
-        res.setDescription(
-          `J'ai supprimé ${messages.size} messages dans le salon.`
-        );
-        interaction.reply({ embeds: [res] });
-      });
+      const messagesFiltresASupprimer = messagesFiltres.filter(
+        (msg) => Date.now() - msg.createdTimestamp < 14 * 24 * 60 * 60 * 1000
+      );
+
+      await channel.bulkDelete(messagesFiltresASupprimer, true);
+
+      const res = new EmbedBuilder().setColor("Green");
+      res.setDescription(
+        `J'ai supprimé ${messagesFiltresASupprimer.size} messages${utilisateur ? ` de ${utilisateur}` : ""}.`
+      );
+
+      await interaction.editReply({ embeds: [res] });
+    } catch (error) {
+      console.error(error);
+      const resError = new EmbedBuilder().setColor("Red");
+      resError.setDescription(
+        "Une erreur s'est produite. Veuillez réessayer plus tard."
+      );
+      await interaction.editReply({ embeds: [resError] });
     }
   },
 };
