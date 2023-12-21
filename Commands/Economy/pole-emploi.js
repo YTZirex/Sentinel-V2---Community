@@ -125,6 +125,11 @@ module.exports = {
             `Vous travaillez désormais en tant que ${metier}!`
           );
           interaction.reply({ embeds: [res], ephemeral: true });
+        } else {
+          return interaction.reply({
+            content: `Vous n'avez pas assez d'argent pour travailler en tant que ${metier}!`,
+            ephemeral: true,
+          });
         }
       }
     }
