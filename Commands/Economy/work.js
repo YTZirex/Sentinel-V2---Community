@@ -24,7 +24,7 @@ module.exports = {
 
       if (!userJobRecord)
         return interaction.reply({
-          content: `Veuillez trouver un travail avec la commande /pole-emploi afin de pouvoir travailler.`,
+          content: `Veuillez trouver un travail avec la commande </pole-emploi:1187473930236211339> afin de pouvoir travailler.`,
           ephemeral: true,
         });
       let salaire;
