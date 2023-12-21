@@ -52,7 +52,7 @@ module.exports = {
 
       if (amount > channelMessages.size) amount = channelMessages;
 
-      const clearEmbed = new EmbedBuilder().setColor("Green");
+      const res = new EmbedBuilder().setColor("Green");
 
       await interaction.deferReply({
         ephemeral: true,
