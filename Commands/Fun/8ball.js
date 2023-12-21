@@ -5,7 +5,7 @@ const {
 } = require("discord.js");
 
 module.exports = {
-  premiumOnly: true,
+  premiumOnly: false,
   data: new SlashCommandBuilder()
     .setName("8ball")
     .setDescription("Permet de demander au bot une question.")
@@ -13,7 +13,7 @@ module.exports = {
       option
         .setName("question")
         .setDescription("Votre question")
-        .setRequired(true)
+        .setRequired(true),
     ),
   async execute(interaction) {
     const question = interaction.options.getString("question");
@@ -51,7 +51,7 @@ module.exports = {
           name: "**Réponse : **",
           value: chosenAnswer(),
           inline: true,
-        }
+        },
       );
 
     interaction.reply({ embeds: [res] });
