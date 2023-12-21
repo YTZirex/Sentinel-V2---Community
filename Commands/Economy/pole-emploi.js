@@ -98,6 +98,7 @@ module.exports = {
       await newUserJobRecord.save();
       if (userEconomyRecord.balance >= prix) {
         newUserJobRecord.job = metier.toString();
+        await newUserJobRecord.save();
         userEconomyRecord.balance -= prix;
         await userEconomyRecord.save();
         res.setDescription(`Vous travaillez désormais en tant que ${metier}!`);
@@ -117,6 +118,7 @@ module.exports = {
       } else {
         if (userEconomyRecord.balance >= prix) {
           userJobRecord.job = metier.toString();
+          await userJobRecord.save();
           userEconomyRecord.balance -= prix;
           await userEconomyRecord.save();
           res.setDescription(
