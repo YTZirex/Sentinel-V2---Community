@@ -14,7 +14,7 @@ module.exports = {
         .setName("nombre")
         .setDescription("Nombre de messages à supprimer.")
         .setMinValue(1)
-        .setMaxValue(98)
+        .setMaxValue(100)
         .setRequired(true)
     )
     .addUserOption((option) =>
@@ -26,37 +26,71 @@ module.exports = {
         .setRequired(false)
     ),
   async execute(interaction) {
-    const user = interaction.user.id;
-    const target = interaction.options.getUser("utilisateur");
-    const amount = interaction.options.getInteger("nombre");
+    const { channel, options } = interaction;
 
-    const messages = await interaction.channel.messages.fetch({
-      limit: amount + 1,
-    });
+    let amount = options.getInteger("nombre");
+    const target = options.getUser("utilisateur");
 
-    const res = new EmbedBuilder().setColor("Green");
+    const multiMsg = amount === 1 ? "message" : "messages";
 
-    if (target) {
-      let i = 0;
-      const filtered = [];
+    if (!amount || amount > 100 || amount < 1) {
+      return await interaction.reply({
+        content: `Veuillez spécifier un nombre entre 1 et 100 avant de supprimer les messages.`,
+        ephemeral: true,
+      });
+    }
 
-      (await messages).filter((msg) => {
-        if (msg.author.id === target.id && amount > i) {
-          filtered.push(msg);
-          i++;
-        }
+    try {
+      const channelMessages = await channel.messages.fetch();
+
+      if (channelMessages.size === 0) {
+        return await interaction.reply({
+          content: `Il n'y a pas de messages dans ce salon à supprimer.`,
+          ephemeral: true,
+        });
+      }
+
+      if (amount > channelMessages.size) amount = channelMessages;
+
+      const clearEmbed = new EmbedBuilder().setColor("Green");
+
+      await interaction.deferReply({
+        ephemeral: true,
       });
 
-      await channel.bulkDelete(filtered).then(messages => {
-        res.setDescription(
-          `J'ai supprimé ${messages.size} messages envoyés par ${target} !`
+      let messagesToDelete = [];
+
+      if (target) {
+        let i = 0;
+        channelMessages.forEach((m) => {
+          if (m.author.id === target.id && messagesToDelete.length < amount) {
+            messagesToDelete.push(m);
+            i++;
+          }
+        });
+
+        clearEmbed.setDescription(
+          `\`✅\` J'ai supprimé \`${messagesToDelete.length}\` ${multiMsg} de ${target} dans ce salon.`
         );
-        interaction.reply({ embeds: [res] });
+      } else {
+        messagesToDelete = channelMessages.first(amount);
+        clearEmbed.setDescription(
+          `\`✅\` J'ai supprimé \`${messagesToDelete.length}\` ${multiMsg} dans ce salon.`
+        );
+      }
+
+      if (messagesToDelete.length > 0) {
+        await channel.bulkDelete(messagesToDelete, true);
+      }
+
+      await interaction.editReply({
+        embeds: [res],
       });
-    } else {
-      await interaction.channel.bulkDelete(amount, true).then(messages => {
-        res.setDescription(`J'ai supprimé ${messages.size} messages envoyés !`);
-        interaction.reply({ embeds: [res] });
+    } catch (err) {
+      console.error(err);
+      await interaction.followUp({
+        content: `Une erreur s'est produite pendant la suppression des messages.`,
+        ephemeral: true,
       });
     }
   },
