@@ -43,8 +43,6 @@ module.exports = {
           }
         )
         .setRequired(true)
-        .setMaxLength(1)
-        .setMinLength(1)
     ),
   async execute(interaction) {
     const noms = interaction.options.getString("noms");
