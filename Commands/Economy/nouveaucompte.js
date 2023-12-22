@@ -6,6 +6,7 @@ const {
 
 const { models, Schema } = require("mongoose");
 const EconomySchema = require("../../Models/Economy");
+const guildModuleSchema = require('../../Models/GuildModules');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -39,6 +40,22 @@ module.exports = {
     const noms = interaction.options.getString("noms");
     const naissance = interaction.options.getString("naissance");
     const sexe = interaction.options.getString("sexe");
+
+    const guildModulesRecord = await guildModuleSchema.findOne({
+      guild: interaction.guild.id,
+    })
+
+    const moduleDisabled = new EmbedBuilder().setColor("Red");
+    if (guildModulesRecord) {
+      if (guildModulesRecord.economy == false) {
+        res.setDescriptionr(`Le module \`Economy\` est désactivé sur ce serveur. Veuillez exécuter la commande dans un autre serveur ou dans notre Support.`)
+        interaction.reply({
+          embeds: [moduleDisabled],
+          ephemeral: true
+        })
+      }
+    }
+
     console.log("a");
     const userEconomyRecord = await EconomySchema.findOne({
       user: interaction.user.id,

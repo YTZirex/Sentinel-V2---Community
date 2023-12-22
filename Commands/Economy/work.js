@@ -2,6 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 const EconomySchema = require("../../Models/Economy");
 const JobSchema = require("../../Models/Job");
+const guildModuleSchema = require("../../Models/GuildModules");
 
 var cooldown = [];
 
@@ -15,6 +16,23 @@ module.exports = {
     if (!cooldown.includes(userId)) {
       const userJobRecord = await JobSchema.findOne({ user: userId });
       const userEconomyRecord = await EconomySchema.findOne({ user: userId });
+
+      const guildModulesRecord = await guildModuleSchema.findOne({
+        guild: interaction.guild.id,
+      });
+
+      const moduleDisabled = new EmbedBuilder().setColor("Red");
+      if (guildModulesRecord) {
+        if (guildModulesRecord.economy == false) {
+          res.setDescriptionr(
+            `Le module \`Economy\` est désactivé sur ce serveur. Veuillez exécuter la commande dans un autre serveur ou dans notre Support.`
+          );
+          interaction.reply({
+            embeds: [moduleDisabled],
+            ephemeral: true,
+          });
+        }
+      }
 
       if (!userEconomyRecord)
         return interaction.reply({
