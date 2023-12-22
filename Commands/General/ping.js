@@ -15,9 +15,7 @@ module.exports = {
     const ping = reply.createdTimestamp - interaction.createdTimestamp;
 
     const res = new EmbedBuilder()
-      .setThumbnail({
-        iconURL: interaction.user.avatarURL(),
-      })
+      .setThumbnail(interaction.user.displayAvatarURL())
       .setTitle("🏓 Pong!")
       .addFields(
         {
