@@ -35,11 +35,11 @@ module.exports = {
         .addChoices(
           {
             name: "Homme",
-            value: "H",
+            value: "Homme",
           },
           {
             name: "Femme",
-            value: "F",
+            value: "Femme",
           }
         )
         .setRequired(true)
