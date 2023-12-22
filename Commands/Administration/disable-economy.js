@@ -17,7 +17,7 @@ module.exports = {
     const guildModulesRecord = await guildModuleSchema.findOne({
       guild: interaction.guild.id,
     });
-    const res = new EmbedBuilder().setColor("Green");
+    const res = new EmbedBuilder().setColor("Red");
     if (!guildModulesRecord) {
       const newGuildModulesRecord = new guildModuleSchema({
         guild: interaction.guild.id,
@@ -26,7 +26,7 @@ module.exports = {
       });
       await newGuildModulesRecord.save();
       res.setDescription(
-        `Le module \`Economy\` a été désactivé.\nPour activer le module, exécuter la commande /enable-economy.`
+        `Le module \`Economy\` a été désactivé.\nPour activer le module, exécuter la commande </enable-economy:1187736150245392455>.`
       );
       interaction.reply({
         embeds: [res],
@@ -41,7 +41,7 @@ module.exports = {
       guildModulesRecord.economy = false;
       await guildModulesRecord.save();
       res.setDescription(
-        `Le module \`Economy\` a été désactivé.\nPour activer le module, exécuter la commande /enable-economy.`
+        `Le module \`Economy\` a été désactivé.\nPour activer le module, exécuter la commande </enable-economy:1187736150245392455>.`
       );
       interaction.reply({
         embeds: [res],
