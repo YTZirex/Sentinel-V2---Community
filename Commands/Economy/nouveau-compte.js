@@ -60,8 +60,14 @@ module.exports = {
       });
     }
 
-    const birthDate = new Date(naissance);
-    if (birthDate > eighteenYearsAgo) {
+    const birthDateParts = naissance.split("/");
+    const userBirthDate = new Date(
+      parseInt(birthDateParts[2], 10),
+      parseInt(birthDateParts[1], 10) - 1,
+      parseInt(birthDateParts[0], 10)
+    );
+
+    if (userBirthDate > eighteenYearsAgo) {
       return await interaction.reply({
         content: `Vous devez avoir au moins 18 ans pour créer un compte bancaire.`,
         ephemeral: true,
@@ -76,7 +82,7 @@ module.exports = {
     if (guildModulesRecord) {
       if (guildModulesRecord.economy == false) {
         moduleDisabled.setDescription(
-          `Le module \`Economy\` est désactivé sur ce serveur. Veuillez exécuter la commande dans un autre serveur ou dans notre Support.`
+          `Le module \`Economy\` est désactivé sur ce serveur. Veuillez exécuter la commande dans un autre serveur ou dans notre </support:1186652337750671401>.`
         );
         await interaction.reply({
           embeds: [moduleDisabled],
