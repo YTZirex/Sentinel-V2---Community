@@ -31,7 +31,17 @@ module.exports = {
     .addStringOption((option) =>
       option
         .setName("sexe")
-        .setDescription("Votre sexe (H ou F).")
+        .setDescription("Votre sexe.")
+        .addChoices(
+          {
+            name: 'Homme',
+            value: 'H'
+          },
+          {
+            name: 'Femme',
+            value: 'F'
+          }
+        )
         .setRequired(true)
         .setMaxLength(1)
         .setMinLength(1)
@@ -64,7 +74,7 @@ module.exports = {
     console.log("b");
     if (userEconomyRecord)
       return await interaction.reply({
-        content: `Vous avez déjà un compte bancaire. Pour toutes modifications veuillez nous contacter sur notre [Support](https://discord.gg/My2BVCmJEY).`,
+        content: `Vous avez déjà un compte bancaire. Pour toutes modifications veuillez nous contacter sur notre <[Support](https://discord.gg/My2BVCmJEY)>.`,
         ephemeral: true,
       });
 
