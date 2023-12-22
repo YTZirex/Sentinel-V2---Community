@@ -51,6 +51,14 @@ module.exports = {
     const naissance = interaction.options.getString("naissance");
     const sexe = interaction.options.getString("sexe");
 
+    const dateOfBirthRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+    if (!dateOfBirthRegex.test(naissance)) {
+      return await interaction.reply({
+        content: `Le format de la date de naissance est incorrect. Utilisez le format JJ/MM/AAAA.`,
+        ephemeral: true,
+      });
+    }
+
     const guildModulesRecord = await guildModuleSchema.findOne({
       guild: interaction.guild.id,
     })
