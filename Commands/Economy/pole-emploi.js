@@ -64,7 +64,7 @@ module.exports = {
     const moduleDisabled = new EmbedBuilder().setColor("Red");
     if (guildModulesRecord) {
       if (guildModulesRecord.economy == false) {
-        moduleDisabled.setDescriptionr(`Le module \`Economy\` est désactivé sur ce serveur. Veuillez exécuter la commande dans un autre serveur ou dans notre Support.`)
+        moduleDisabled.setDescription(`Le module \`Economy\` est désactivé sur ce serveur. Veuillez exécuter la commande dans un autre serveur ou dans notre Support.`)
         interaction.reply({
           embeds: [moduleDisabled],
           ephemeral: true
