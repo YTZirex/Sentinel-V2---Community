@@ -50,7 +50,7 @@ module.exports = {
 
     switch (category) {
       case "admin":
-        return res.addFields(
+         res.addFields(
           {
             name: "\u200b",
             value: "🛠️** Administration**",
@@ -78,7 +78,7 @@ module.exports = {
         );
         break;
       case "mod":
-        return res.addFields(
+         res.addFields(
           {
             name: "\u200b",
             value: "🛡️** Modération**",
@@ -94,7 +94,7 @@ module.exports = {
         );
         break;
       case "economy":
-        return res.addFields(
+         res.addFields(
           {
             name: "\u200b",
             value: "💸** Economie**",
@@ -122,7 +122,7 @@ module.exports = {
         );
         break;
       case "infos":
-        return res.addFields(
+         res.addFields(
           {
             name: "\u200b",
             value: "❓** Informations**",
@@ -138,7 +138,7 @@ module.exports = {
         );
         break;
       case "fun":
-        return res.addFields(
+         res.addFields(
           {
             name: "\u200b",
             value: "🎮** Divertissement**",
@@ -154,7 +154,7 @@ module.exports = {
         );
         break;
       case "general":
-        return res.addFields(
+         res.addFields(
           {
             name: "\u200b",
             value: ":scroll:** Général",
@@ -174,7 +174,7 @@ module.exports = {
         );
         break;
       case "premium":
-        return res.addFields(
+         res.addFields(
           {
             name: "\u200b",
             value: "⚡** Sentinel Premium**",
