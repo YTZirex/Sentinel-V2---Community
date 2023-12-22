@@ -28,7 +28,7 @@ module.exports = {
       });
       await newGuildModulesRecord.save();
       res.setDescription(
-        `Le module \`Economy\` a été activé.\nPour désactiver le module, exécuter la commande </disable-economy:1187086697427644476>.`
+        `Le module \`Economy\` a été activé.\nPour désactiver le module, exécuter la commande </disable-economy:1187736150245392454>.`
       );
       await interaction.reply({
         embeds: [res],
@@ -45,7 +45,7 @@ module.exports = {
         guildModulesRecord.economy = true;
         await guildModulesRecord.save();
         res.setDescription(
-          `Le module \`Economy\` a été activé.\nPour désactiver le module, exécuter la commande </disable-economy:1187086697427644476>.`
+          `Le module \`Economy\` a été activé.\nPour désactiver le module, exécuter la commande </disable-economy:1187736150245392454>.`
         );
 
         await interaction.reply({
