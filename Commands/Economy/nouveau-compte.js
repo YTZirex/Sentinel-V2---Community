@@ -99,7 +99,7 @@ module.exports = {
     console.log("b");
     if (userEconomyRecord)
       return await interaction.reply({
-        content: `Vous avez déjà un compte bancaire. Pour toutes modifications veuillez nous contacter sur notre <[Support](https://discord.gg/My2BVCmJEY)>.`,
+        content: `Vous avez déjà un compte bancaire. Pour toutes modifications veuillez nous contacter sur notre </support:1186652337750671401>.`,
         ephemeral: true,
       });
 
