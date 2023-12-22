@@ -5,6 +5,7 @@ const {
 } = require("discord.js");
 const { models, Schema } = require("mongoose");
 const welcomeSchema = require("../../Models/Welcome");
+const guildModuleSchema = require('../../Models/GuildModules');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -39,6 +40,10 @@ module.exports = {
       guild: interaction.guild.id,
     });
 
+    const guildModulesRecord = await guildModuleSchema.findOne({
+      guild: interaction.guild.id,
+    })
+
     if (!interaction.guild.members.me.permissions.has(PermissionFlagsBits.SendMessages)) return interaction.reply({ 
         content: `Je n'ai pas la permission d'envoyer de message dans ce salon.`, 
         ephemeral: true
@@ -52,12 +57,22 @@ module.exports = {
     if (!guildRecord) {
       const newGuildRecord = new welcomeSchema({
         guild: interaction.guild.id,
-        enabled: true,
         channel: chosenChannel.id,
         message: chosenMessage,
         role: chosenRole.id,
       });
       await newGuildRecord.save();
+      if (!guildModulesRecord) {
+        const newGuildModulesRecord = new guildModuleSchema({
+          guild: interaction.guild.id,
+          economy: true,
+          welcome: true,
+        });
+        await newGuildModulesRecord.save();
+      } else {
+        guildModulesRecord.welcome = true;
+        await guildModulesRecord.save();
+      }
       const res = new EmbedBuilder()
         .setTitle("Module activé!")
         .setDescription(`Le module \`Bienvenue\` a été activé.`)
@@ -85,7 +100,17 @@ module.exports = {
         ephemeral: false,
       });
     } else {
-      guildRecord.enabled = true;
+      if (guildModulesRecord) {
+        guildModulesRecord.welcome = true;
+        await guildModulesRecord.save();
+      } else if (!guildModulesRecord) {
+        const newGuildModulesRecord = new guildModuleSchema({
+          guild: interaction.guild.id,
+          economy: true,
+          welcome: true,
+        });
+        await newGuildModulesRecord.save();
+      }
       guildRecord.channel = chosenChannel.id;
       guildRecord.message = chosenMessage;
       guildRecord.role = chosenRole.id;

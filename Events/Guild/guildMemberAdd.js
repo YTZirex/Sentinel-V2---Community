@@ -5,6 +5,7 @@ const {
 } = require("discord.js");
 const { models, Schema } = require("mongoose");
 const welcomeSchema = require("../../Models/Welcome");
+const guildModuleSchema = require("../../Models/GuildModules");
 
 module.exports = {
   name: "guildMemberAdd",
@@ -14,10 +15,23 @@ module.exports = {
       guild: guild.id,
     });
 
+    const guildModulesRecord = await guildModuleSchema.findOne({
+      guild: guild.id,
+    });
+
+    if (!guildModulesRecord) {
+      const newGuildModulesRecord = new guildModuleSchema({
+        guild: guild.id,
+        economy: true,
+        welcome: false,
+      });
+      await newGuildModulesRecord.save();
+      return;
+    }
+
     if (!guildRecord) {
       const newGuildRecord = new welcomeSchema({
         guild: guild.id,
-        enabled: false,
         channel: "none",
         message: "none",
         role: "none",
@@ -25,8 +39,8 @@ module.exports = {
       await newGuildRecord.save();
       return;
     } else {
-      if (guildRecord.enabled == false) return;
-      if (guildRecord.enabled == true) {
+      if (guildModulesRecord.welcome == false) return;
+      if (guildModulesRecord.welcome == true) {
         const res = new EmbedBuilder()
           .setTitle(`Bienvenue ${member.user.username}!`)
           .setThumbnail(member.user.displayAvatarURL())
@@ -39,7 +53,7 @@ module.exports = {
           .setColor("Blurple")
           .setThumbnail(guild.iconURL());
         const welcomeChannel = member.guild.channels.cache.get(
-          guildRecord.channel,
+          guildRecord.channel
         );
 
         if (
@@ -53,10 +67,13 @@ module.exports = {
         }
 
         // Check if the role is set and not "none"
-        if (guild.members.me.permissions.has(PermissionFlagsBits.ManageRoles) && guild.members.me.roles.highest.position > guildRecord.role.position) {
+        if (
+          guild.members.me.permissions.has(PermissionFlagsBits.ManageRoles) &&
+          guild.members.me.roles.highest.position > guildRecord.role.position
+        ) {
           member.roles.add(guildRecord.role);
         } else {
-          console.log('pas la perm')
+          console.log("pas la perm");
         }
       }
     }

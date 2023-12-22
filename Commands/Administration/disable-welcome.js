@@ -6,6 +6,7 @@ const {
 
 const { models, Schema } = require("mongoose");
 const welcomeSchema = require("../../Models/Welcome");
+const guildModuleSchema = require("../../Models/GuildModules");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -17,15 +18,31 @@ module.exports = {
       guild: interaction.guild.id,
     });
 
+    const guildModulesRecord = await guildModuleSchema.findOne({
+      guild: interaction.guild.id,
+    });
+
     if (guildRecord) {
-      guildRecord.enabled = false;
+      if (guildModulesRecord) {
+        guildModulesRecord.welcome = false;
+        await guildModulesRecord.save();
+      } else if (!guildModulesRecord) {
+        const newGuildModulesRecord = new guildModuleSchema({
+          guild: interaction.guild.id,
+          economy: true,
+          welcome: false,
+        });
+        await newGuildModulesRecord.save();
+      }
       guildRecord.message = "none";
       guildRecord.channel = "none";
       guildRecord.role = "none";
       await guildRecord.save();
       const res = new EmbedBuilder()
         .setTitle(`Module désactivé!`)
-        .setDescription(`Le module \`Bienvenue\` a été désactivé.\nPour activer le module, exécuter la commande </setup-welcome:1187086697427644477>`)
+        .setDescription(
+          `Le module \`Bienvenue\` a été désactivé.\nPour activer le module, exécuter la commande </setup-welcome:1187086697427644477>`
+        )
         .setTimestamp()
         .setColor("Red");
       await interaction.reply({
@@ -35,15 +52,28 @@ module.exports = {
     } else {
       const newGuildRecord = new welcomeSchema({
         guild: interaction.guild.id,
-        enabled: false,
         channel: "none",
         message: "none",
         role: "none",
       });
       await newGuildRecord.save();
+
+      if (guildModulesRecord) {
+        guildModulesRecord.welcome = false;
+        await guildModulesRecord.save();
+      } else if (!guildModulesRecord) {
+        const newGuildModulesRecord = new guildModuleSchema({
+          guild: interaction.guild.id,
+          economy: true,
+          welcome: false,
+        });
+        await newGuildModulesRecord.save();
+      }
       const res = new EmbedBuilder()
         .setTitle(`Module désactivé!`)
-        .setDescription(`Le module \`Bienvenue\` a été désactivé.\nPour activer le module, exécuter la commande </setup-welcome:1187086697427644477>`)
+        .setDescription(
+          `Le module \`Bienvenue\` a été désactivé.\nPour activer le module, exécuter la commande </setup-welcome:1187086697427644477>`
+        )
         .setTimestamp()
         .setColor("Red");
       await interaction.reply({
