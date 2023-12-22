@@ -1,0 +1,16 @@
+{
+  "disable-economy": "Permet de désactiver le module Economy.",
+  "enable-economy": "Permet d'activer le module Economy.",
+  "disable-welcome": "Permet de désactiver le module Welcome.",
+  "setup-welcome": "Permet d'activer le module Welcome.",
+  "compte": "Permet de voir ses informations bancaires.",
+  "nouveau-compte": "Permet de créer un compte bancaire.",
+  "pole-emploi": "Permet de récupérer un travail.",
+  "work": "Permet de gagner de l'argent en travaillant.",
+  "8ball": "Permet de demander au bot une question.",
+  "ping": "Permet de voir la latence du bot et du client.",
+  "support": "Permet d'avoir le lien d'invitation de notre Support.",
+  "clear": "Permet de supprimer des messages dans un salon.",
+  "claim-premium": "Permet de récupérer votre abonnement Sentinel Premium.",
+  "help": "Permet de voir la liste des commandes."
+}

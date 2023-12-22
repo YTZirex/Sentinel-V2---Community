@@ -5,7 +5,7 @@ const Code = require("../../Models/CodeSchema");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("claim-premium")
-    .setDescription("Permet de récupérer votre abonnement Premium.")
+    .setDescription("Permet de récupérer votre abonnement Sentinel Premium.")
     .addStringOption((option) =>
       option
         .setName("code")

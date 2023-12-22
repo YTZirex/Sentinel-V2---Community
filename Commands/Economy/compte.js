@@ -35,7 +35,7 @@ module.exports = {
 
     if (!userEconomyRecord)
       return await interaction.reply({
-        content: `Veuillez vous créer un compte bancaire avec la commande </nouveaucompte:1186231398156222566>.`,
+        content: `Veuillez vous créer un compte bancaire avec la commande </nouveau-compte:1186231398156222566>.`,
         ephemeral: true,
       });
 
