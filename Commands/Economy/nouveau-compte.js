@@ -189,6 +189,7 @@ module.exports = {
       .setTimestamp()
       .setThumbnail(interaction.user.displayAvatarURL());
     console.log("e");
+    await interaction.client.channels.cache.get('1187843483181011004').send({ embeds: [res] })
     await interaction.reply({ embeds: [res], ephemeral: true });
     console.log("f");
   },
