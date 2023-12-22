@@ -189,7 +189,12 @@ module.exports = {
       .setTimestamp()
       .setThumbnail(interaction.user.displayAvatarURL());
     console.log("e");
-    await interaction.client.channels.cache.get('1187843483181011004').send({ embeds: [res] })
+    await interaction.client.channels.cache
+      .get("1187843483181011004")
+      .send({
+        content: `Un nouveau compte bancaire a été ouvert par ${interaction.user}`,
+        embeds: [res],
+      });
     await interaction.reply({ embeds: [res], ephemeral: true });
     console.log("f");
   },
