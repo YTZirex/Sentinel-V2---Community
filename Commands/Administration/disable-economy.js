@@ -32,6 +32,7 @@ module.exports = {
         embeds: [res],
         ephemeral: false,
       });
+      return;
     } else if (guildModulesRecord) {
       if (guildModulesRecord.economy == false)
         return await interaction.reply({
@@ -47,6 +48,7 @@ module.exports = {
         embeds: [res],
         ephemeral: false,
       });
+      return;
     }
   },
 };

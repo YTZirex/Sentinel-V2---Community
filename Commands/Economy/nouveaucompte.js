@@ -53,6 +53,7 @@ module.exports = {
           embeds: [moduleDisabled],
           ephemeral: true
         })
+        return;
       }
     }
 
