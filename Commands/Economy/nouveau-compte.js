@@ -6,11 +6,11 @@ const {
 
 const { models, Schema } = require("mongoose");
 const EconomySchema = require("../../Models/Economy");
-const guildModuleSchema = require('../../Models/GuildModules');
+const guildModuleSchema = require("../../Models/GuildModules");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("nouveaucompte")
+    .setName("nouveau-compte")
     .setDescription("Permet de créer un compte bancaire.")
     .addStringOption((option) =>
       option
@@ -34,12 +34,12 @@ module.exports = {
         .setDescription("Votre sexe.")
         .addChoices(
           {
-            name: 'Homme',
-            value: 'H'
+            name: "Homme",
+            value: "H",
           },
           {
-            name: 'Femme',
-            value: 'F'
+            name: "Femme",
+            value: "F",
           }
         )
         .setRequired(true)
@@ -50,6 +50,9 @@ module.exports = {
     const sexe = interaction.options.getString("sexe");
 
     const dateOfBirthRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+    const eighteenYearsAgo = new Date();
+    eighteenYearsAgo.setFullYear(eighteenYearsAgo.getFullYear() - 18);
+
     if (!dateOfBirthRegex.test(naissance)) {
       return await interaction.reply({
         content: `Le format de la date de naissance est incorrect. Utilisez le format JJ/MM/AAAA.`,
@@ -57,18 +60,28 @@ module.exports = {
       });
     }
 
+    const birthDate = new Date(naissance);
+    if (birthDate > eighteenYearsAgo) {
+      return await interaction.reply({
+        content: `Vous devez avoir au moins 18 ans pour créer un compte bancaire.`,
+        ephemeral: true,
+      });
+    }
+
     const guildModulesRecord = await guildModuleSchema.findOne({
       guild: interaction.guild.id,
-    })
+    });
 
     const moduleDisabled = new EmbedBuilder().setColor("Red");
     if (guildModulesRecord) {
       if (guildModulesRecord.economy == false) {
-        moduleDisabled.setDescription(`Le module \`Economy\` est désactivé sur ce serveur. Veuillez exécuter la commande dans un autre serveur ou dans notre Support.`)
+        moduleDisabled.setDescription(
+          `Le module \`Economy\` est désactivé sur ce serveur. Veuillez exécuter la commande dans un autre serveur ou dans notre Support.`
+        );
         await interaction.reply({
           embeds: [moduleDisabled],
-          ephemeral: true
-        })
+          ephemeral: true,
+        });
         return;
       }
     }
@@ -207,11 +220,13 @@ async function generateCreditCard() {
 
 function generateRandomNumber() {
   let randomNumber;
-  
+
   do {
     randomNumber = Math.floor(Math.random() * 999) + 1;
   } while (randomNumber === 0);
 
   // Add leading zero for numbers between 1 and 99
-  return randomNumber < 100 ? `00${randomNumber}`.slice(-3) : randomNumber.toString();
+  return randomNumber < 100
+    ? `00${randomNumber}`.slice(-3)
+    : randomNumber.toString();
 }
