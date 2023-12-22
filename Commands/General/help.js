@@ -50,15 +50,8 @@ module.exports = {
 
     switch (category) {
       case "admin":
-         res.addFields(
-          {
-            name: "\u200b",
-            value: "🛠️** Administration**",
-          },
-          {
-            name: "\u200a",
-            value: "\u200a",
-          },
+        res.setTitle("🛠️** Administration**");
+        res.addFields(
           {
             name: "</disable-economy:1187736150245392454>",
             value: commandDescription["disable-economy"],
@@ -78,31 +71,15 @@ module.exports = {
         );
         break;
       case "mod":
-         res.addFields(
-          {
-            name: "\u200b",
-            value: "🛡️** Modération**",
-          },
-          {
-            name: "\u200a",
-            value: "\u200a",
-          },
-          {
-            name: "</clear:1184765584345419798>",
-            value: commandDescription["clear"],
-          }
-        );
+        res.setTitle("🛡️** Modération**");
+        res.addFields({
+          name: "</clear:1184765584345419798>",
+          value: commandDescription["clear"],
+        });
         break;
       case "economy":
-         res.addFields(
-          {
-            name: "\u200b",
-            value: "💸** Economie**",
-          },
-          {
-            name: "\u200a",
-            value: "\u200a",
-          },
+        res.setTitle("💸** Economie**");
+        res.addFields(
           {
             name: "</nouveau-compte:1186231398156222566>",
             value: commandDescription["nouveau-compte"],
@@ -122,49 +99,24 @@ module.exports = {
         );
         break;
       case "infos":
-         res.addFields(
-          {
-            name: "\u200b",
-            value: "❓** Informations**",
-          },
-          {
-            name: "\u200a",
-            value: "\u200a",
-          },
-          {
-            name: "</support:1186652337750671401>",
-            value: commandDescription["support"],
-          }
-        );
+        res.setTitle("❓** Informations**");
+        res.addFields({
+          name: "</support:1186652337750671401>",
+          value: commandDescription["support"],
+        });
         break;
       case "fun":
-         res.addFields(
-          {
-            name: "\u200b",
-            value: "🎮** Divertissement**",
-          },
-          {
-            name: "\u200a",
-            value: "\u200a",
-          },
-          {
-            name: "</8ball:1184765584345419797>",
-            value: commandDescription["8ball"],
-          }
-        );
+        res.setTitle("🎮** Divertissement**");
+        res.addFields({
+          name: "</8ball:1184765584345419797>",
+          value: commandDescription["8ball"],
+        });
         break;
       case "general":
-         res.addFields(
+        res.setTitle(":scroll: **Général**");
+        res.addFields(
           {
-            name: "\u200b",
-            value: ":scroll:** Général",
-          },
-          {
-            name: "\u200a",
-            value: "\u200a",
-          },
-          {
-            name: "</help:",
+            name: "</help:1187752871047995462>",
             value: commandDescription["help"],
           },
           {
@@ -174,20 +126,11 @@ module.exports = {
         );
         break;
       case "premium":
-         res.addFields(
-          {
-            name: "\u200b",
-            value: "⚡** Sentinel Premium**",
-          },
-          {
-            name: "\u200a",
-            value: "\u200a",
-          },
-          {
-            name: "</claim-premium:1187035181551452200>",
-            value: commandDescription["claim-premium"],
-          }
-        );
+        res.setTitle("⚡** Sentinel Premium**");
+        res.addFields({
+          name: "</claim-premium:1187035181551452200>",
+          value: commandDescription["claim-premium"],
+        });
         break;
     }
 
