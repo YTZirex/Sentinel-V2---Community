@@ -1,6 +1,7 @@
 const {
   SlashCommandBuilder,
   EmbedBuilder,
+  CommandInteraction,
   PermissionFlagsBits,
 } = require("discord.js");
 
@@ -10,43 +11,42 @@ const guildModuleSchema = require("../../Models/GuildModules");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("disable-economy")
-    .setDescription(`Permet de désactiver le module Economy.`)
+    .setName("enable-economy")
+    .setDescription(`Permet d'activer le module Economy.`)
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
   async execute(interaction) {
     const guildModulesRecord = await guildModuleSchema.findOne({
       guild: interaction.guild.id,
     });
     const res = new EmbedBuilder().setColor("Green");
+
     if (!guildModulesRecord) {
       const newGuildModulesRecord = new guildModuleSchema({
         guild: interaction.guild.id,
-        economy: false,
+        economy: true,
         welcome: false,
       });
       await newGuildModulesRecord.save();
       res.setDescription(
-        `Le module \`Economy\` a été désactivé.\nPour activer le module, exécuter la commande /enable-economy.`
+        `Le module \`Economy\` a été activé.\nPour désactiver le module, exécuter la commande /disable-economy.`
       );
       interaction.reply({
         embeds: [res],
         ephemeral: false,
       });
+      return;
     } else if (guildModulesRecord) {
-      if (guildModulesRecord.economy == false)
+      if (guildModulesRecord.economy == true)
         return interaction.reply({
-          content: `Le module \`Economy\` est déjà désactivé.`,
+          content: `Le module \`Economy\` est déjà activé.`,
           ephemeral: true,
         });
-      guildModulesRecord.economy = false;
+      guildModulesRecord.economy = true;
       await guildModulesRecord.save();
       res.setDescription(
-        `Le module \`Economy\` a été désactivé.\nPour activer le module, exécuter la commande /enable-economy.`
+        `Le module \`Economy\` a été activé.\nPour désactiver le module, exécuter la commande /disable-economy.`
       );
-      interaction.reply({
-        embeds: [res],
-        ephemeral: false,
-      });
+      return;
     }
   },
 };

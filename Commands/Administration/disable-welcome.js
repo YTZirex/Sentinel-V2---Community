@@ -11,7 +11,7 @@ const guildModuleSchema = require("../../Models/GuildModules");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("disable-welcome")
-    .setDescription(`Permet de désactiver le module de Bienvenue.`)
+    .setDescription(`Permet de désactiver le module Welcome.`)
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
   async execute(interaction) {
     const guildRecord = await welcomeSchema.findOne({
@@ -24,6 +24,10 @@ module.exports = {
 
     if (guildRecord) {
       if (guildModulesRecord) {
+        if (guildModulesRecord.welcome == false) return interaction.reply({
+          content: `Le module \`Welcome\` est déjà désactivé.`,
+          ephemeral: true,
+        })
         guildModulesRecord.welcome = false;
         await guildModulesRecord.save();
       } else if (!guildModulesRecord) {
@@ -41,7 +45,7 @@ module.exports = {
       const res = new EmbedBuilder()
         .setTitle(`Module désactivé!`)
         .setDescription(
-          `Le module \`Bienvenue\` a été désactivé.\nPour activer le module, exécuter la commande </setup-welcome:1187086697427644477>`
+          `Le module \`Welcome\` a été désactivé.\nPour activer le module, exécuter la commande </setup-welcome:1187086697427644477>`
         )
         .setTimestamp()
         .setColor("Red");
@@ -59,6 +63,10 @@ module.exports = {
       await newGuildRecord.save();
 
       if (guildModulesRecord) {
+        if (guildModulesRecord.welcome == false) return interaction.reply({
+          content: `Le module \`Welcome\` est déjà désactivé.`,
+          ephemeral: true,
+        })
         guildModulesRecord.welcome = false;
         await guildModulesRecord.save();
       } else if (!guildModulesRecord) {
@@ -72,7 +80,7 @@ module.exports = {
       const res = new EmbedBuilder()
         .setTitle(`Module désactivé!`)
         .setDescription(
-          `Le module \`Bienvenue\` a été désactivé.\nPour activer le module, exécuter la commande </setup-welcome:1187086697427644477>`
+          `Le module \`Welcome\` a été désactivé.\nPour activer le module, exécuter la commande </setup-welcome:1187086697427644477>`
         )
         .setTimestamp()
         .setColor("Red");

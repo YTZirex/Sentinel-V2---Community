@@ -5,12 +5,12 @@ const {
 } = require("discord.js");
 const { models, Schema } = require("mongoose");
 const welcomeSchema = require("../../Models/Welcome");
-const guildModuleSchema = require('../../Models/GuildModules');
+const guildModuleSchema = require("../../Models/GuildModules");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("setup-welcome")
-    .setDescription(`Permet d'annoncer quand un membre rejoint le serveur.`)
+    .setDescription(`Permet d'activer le module Welcome.`)
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .addChannelOption((option) =>
       option
@@ -42,17 +42,27 @@ module.exports = {
 
     const guildModulesRecord = await guildModuleSchema.findOne({
       guild: interaction.guild.id,
-    })
-
-    if (!interaction.guild.members.me.permissions.has(PermissionFlagsBits.SendMessages)) return interaction.reply({ 
-        content: `Je n'ai pas la permission d'envoyer de message dans ce salon.`, 
-        ephemeral: true
-    })
-
-    if (!interaction.guild.members.me.permissions.has(PermissionFlagsBits.ManageRoles)) return interaction.reply({
-        content: `Je n'ai pas la permission de gérer les rôles d'autres utilisateurs.`,
-        ephemeral: true
     });
+
+    if (
+      !interaction.guild.members.me.permissions.has(
+        PermissionFlagsBits.SendMessages
+      )
+    )
+      return interaction.reply({
+        content: `Je n'ai pas la permission d'envoyer de message dans ce salon.`,
+        ephemeral: true,
+      });
+
+    if (
+      !interaction.guild.members.me.permissions.has(
+        PermissionFlagsBits.ManageRoles
+      )
+    )
+      return interaction.reply({
+        content: `Je n'ai pas la permission de gérer les rôles d'autres utilisateurs.`,
+        ephemeral: true,
+      });
 
     if (!guildRecord) {
       const newGuildRecord = new welcomeSchema({
@@ -75,7 +85,7 @@ module.exports = {
       }
       const res = new EmbedBuilder()
         .setTitle("Module activé!")
-        .setDescription(`Le module \`Bienvenue\` a été activé.`)
+        .setDescription(`Le module \`Welcome\` a été activé.`)
         .setTimestamp()
         .setColor("Green")
         .addFields(
@@ -118,7 +128,7 @@ module.exports = {
       await guildRecord.save();
       const res = new EmbedBuilder()
         .setTitle("Module activé!")
-        .setDescription(`Le module \`Bienvenue\` a été activé.`)
+        .setDescription(`Le module \`Welcome\` a été activé.`)
         .setTimestamp()
         .setColor("Green")
         .addFields(
