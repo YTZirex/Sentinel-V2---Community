@@ -49,7 +49,7 @@ module.exports = {
         PermissionFlagsBits.SendMessages
       )
     )
-      return interaction.reply({
+      return await interaction.reply({
         content: `Je n'ai pas la permission d'envoyer de message dans ce salon.`,
         ephemeral: true,
       });
@@ -59,7 +59,7 @@ module.exports = {
         PermissionFlagsBits.ManageRoles
       )
     )
-      return interaction.reply({
+      return await interaction.reply({
         content: `Je n'ai pas la permission de gérer les rôles d'autres utilisateurs.`,
         ephemeral: true,
       });
@@ -105,7 +105,7 @@ module.exports = {
             inline: true,
           }
         );
-      interaction.reply({
+        await interaction.reply({
         embeds: [res],
         ephemeral: false,
       });
@@ -148,7 +148,7 @@ module.exports = {
             inline: true,
           }
         );
-      interaction.reply({
+        await interaction.reply({
         embeds: [res],
         ephemeral: false,
       });

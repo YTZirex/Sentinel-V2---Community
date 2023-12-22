@@ -30,23 +30,30 @@ module.exports = {
       res.setDescription(
         `Le module \`Economy\` a été activé.\nPour désactiver le module, exécuter la commande </disable-economy:1187086697427644476>.`
       );
-      interaction.reply({
+      await interaction.reply({
         embeds: [res],
         ephemeral: false,
       });
       return;
     } else if (guildModulesRecord) {
-      if (guildModulesRecord.economy == true)
-        return interaction.reply({
+      if (guildModulesRecord.economy == true) {
+        return await interaction.reply({
           content: `Le module \`Economy\` est déjà activé.`,
           ephemeral: true,
         });
-      guildModulesRecord.economy = true;
-      await guildModulesRecord.save();
-      res.setDescription(
-        `Le module \`Economy\` a été activé.\nPour désactiver le module, exécuter la commande </disable-economy:1187086697427644476>.`
-      );
-      return;
+      } else {
+        guildModulesRecord.economy = true;
+        await guildModulesRecord.save();
+        res.setDescription(
+          `Le module \`Economy\` a été activé.\nPour désactiver le module, exécuter la commande </disable-economy:1187086697427644476>.`
+        );
+
+        await interaction.reply({
+          embeds: [res],
+          ephemeral: true,
+        });
+        return;
+      }
     }
   },
 };

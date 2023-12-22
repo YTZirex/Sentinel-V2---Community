@@ -28,13 +28,13 @@ module.exports = {
       res.setDescription(
         `Le module \`Economy\` a été désactivé.\nPour activer le module, exécuter la commande </enable-economy:1187736150245392455>.`
       );
-      interaction.reply({
+      await interaction.reply({
         embeds: [res],
         ephemeral: false,
       });
     } else if (guildModulesRecord) {
       if (guildModulesRecord.economy == false)
-        return interaction.reply({
+        return await interaction.reply({
           content: `Le module \`Economy\` est déjà désactivé.`,
           ephemeral: true,
         });
@@ -43,7 +43,7 @@ module.exports = {
       res.setDescription(
         `Le module \`Economy\` a été désactivé.\nPour activer le module, exécuter la commande </enable-economy:1187736150245392455>.`
       );
-      interaction.reply({
+      await interaction.reply({
         embeds: [res],
         ephemeral: false,
       });

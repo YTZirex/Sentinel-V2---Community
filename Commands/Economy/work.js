@@ -27,7 +27,7 @@ module.exports = {
           moduleDisabled.setDescription(
             `Le module \`Economy\` est désactivé sur ce serveur. Veuillez exécuter la commande dans un autre serveur ou dans notre Support.`
           );
-          interaction.reply({
+          await interaction.reply({
             embeds: [moduleDisabled],
             ephemeral: true,
           });
@@ -35,13 +35,13 @@ module.exports = {
       }
 
       if (!userEconomyRecord)
-        return interaction.reply({
+        return await interaction.reply({
           content: `Veuillez créer un compte bancaire avec la commande </nouveaucompte:1186231398156222566> afin de pouvoir travailler.`,
           ephemeral: true,
         });
 
       if (!userJobRecord)
-        return interaction.reply({
+        return await interaction.reply({
           content: `Veuillez trouver un travail avec la commande </pole-emploi:1187473930236211339> afin de pouvoir travailler.`,
           ephemeral: true,
         });

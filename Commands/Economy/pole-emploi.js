@@ -65,7 +65,7 @@ module.exports = {
     if (guildModulesRecord) {
       if (guildModulesRecord.economy == false) {
         moduleDisabled.setDescription(`Le module \`Economy\` est désactivé sur ce serveur. Veuillez exécuter la commande dans un autre serveur ou dans notre Support.`)
-        interaction.reply({
+        await interaction.reply({
           embeds: [moduleDisabled],
           ephemeral: true
         })
@@ -73,7 +73,7 @@ module.exports = {
     }
 
     if (!userEconomyRecord)
-      return interaction.reply({
+      return await interaction.reply({
         content: `Veuillez créer un compte bancaire avec la commande </nouveaucompte:1186231398156222566> avant de pouvoir travailler.`,
         ephemeral: true,
       });
@@ -118,16 +118,16 @@ module.exports = {
         userEconomyRecord.balance -= prix;
         await userEconomyRecord.save();
         res.setDescription(`Vous travaillez désormais en tant que ${metier}!`);
-        interaction.reply({ embeds: [res], ephemeral: true });
+        await interaction.reply({ embeds: [res], ephemeral: true });
       } else {
-        return interaction.reply({
+        return await interaction.reply({
           content: `Vous n'avez pas assez d'argent pour travailler en tant que ${metier}!`,
           ephemeral: true,
         });
       }
     } else {
       if (userJobRecord.job === metier.toString()) {
-        return interaction.reply({
+        return await interaction.reply({
           content: `Vous travaillé déjà en tant que ${metier}!`,
           ephemeral: true,
         });
@@ -140,9 +140,9 @@ module.exports = {
           res.setDescription(
             `Vous travaillez désormais en tant que ${metier}!`
           );
-          interaction.reply({ embeds: [res], ephemeral: true });
+          await interaction.reply({ embeds: [res], ephemeral: true });
         } else {
-          return interaction.reply({
+          return await interaction.reply({
             content: `Vous n'avez pas assez d'argent pour travailler en tant que ${metier}!`,
             ephemeral: true,
           });

@@ -24,7 +24,7 @@ module.exports = {
 
     if (guildRecord) {
       if (guildModulesRecord) {
-        if (guildModulesRecord.welcome == false) return interaction.reply({
+        if (guildModulesRecord.welcome == false) return await interaction.reply({
           content: `Le module \`Welcome\` est déjà désactivé.`,
           ephemeral: true,
         })

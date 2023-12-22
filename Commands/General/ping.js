@@ -29,7 +29,7 @@ module.exports = {
       )
       .setTimestamp();
 
-    interaction.editReply({
+      await interaction.editReply({
       embeds: [res],
     });
   },
