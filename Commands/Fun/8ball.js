@@ -9,6 +9,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("8ball")
     .setDescription("Permet de demander au bot une question.")
+    .setDMPermission(false)
     .addStringOption((option) =>
       option
         .setName("question")

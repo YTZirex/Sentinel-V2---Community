@@ -6,6 +6,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("claim-premium")
     .setDescription("Permet de récupérer votre abonnement Sentinel Premium.")
+    .setDMPermission(true)
     .addStringOption((option) =>
       option
         .setName("code")

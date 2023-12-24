@@ -12,6 +12,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("nouveau-compte")
     .setDescription("Permet de créer un compte bancaire.")
+    .setDMPermission(false)
     .addStringOption((option) =>
       option
         .setName("noms")

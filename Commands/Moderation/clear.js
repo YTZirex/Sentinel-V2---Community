@@ -8,6 +8,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("clear")
     .setDescription("Permet de supprimer des messages dans un salon.")
+    .setDMPermission(false)
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
     .addIntegerOption((option) =>
       option

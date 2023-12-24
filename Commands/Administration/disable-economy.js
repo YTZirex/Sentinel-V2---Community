@@ -12,6 +12,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("disable-economy")
     .setDescription(`Permet de désactiver le module Economy.`)
+    .setDMPermission(false)
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
   async execute(interaction) {
     const guildModulesRecord = await guildModuleSchema.findOne({

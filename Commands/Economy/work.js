@@ -9,7 +9,8 @@ var cooldown = [];
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("work")
-    .setDescription("Permet de gagner de l'argent en travaillant."),
+    .setDescription("Permet de gagner de l'argent en travaillant.")
+    .setDMPermission(false),
   async execute(interaction) {
     const userId = interaction.user.id;
 

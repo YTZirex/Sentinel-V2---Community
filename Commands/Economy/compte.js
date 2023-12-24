@@ -11,7 +11,8 @@ const guildModuleSchema = require('../../Models/GuildModules');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("compte")
-    .setDescription("Permet de voir ses informations bancaires."),
+    .setDescription("Permet de voir ses informations bancaires.")
+    .setDMPermission(false),
   async execute(interaction) {
     const userEconomyRecord = await EconomySchema.findOne({
       user: interaction.user.id,

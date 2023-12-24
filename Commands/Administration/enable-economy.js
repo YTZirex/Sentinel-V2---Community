@@ -13,6 +13,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("enable-economy")
     .setDescription(`Permet d'activer le module Economy.`)
+    .setDMPermission(false)
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
   async execute(interaction) {
     const guildModulesRecord = await guildModuleSchema.findOne({

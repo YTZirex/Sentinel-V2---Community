@@ -12,6 +12,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('userinfo')
         .setDescription(`Permet de voir les informations d'un utilisateur.`)
+        .setDMPermission(false)
         .addUserOption((option) =>
             option
                 .setName('utilisateur')

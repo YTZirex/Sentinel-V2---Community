@@ -12,6 +12,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("disable-welcome")
     .setDescription(`Permet de désactiver le module Welcome.`)
+    .setDMPermission(false)
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
   async execute(interaction) {
     const guildRecord = await welcomeSchema.findOne({

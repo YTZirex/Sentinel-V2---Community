@@ -11,6 +11,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("setup-welcome")
     .setDescription(`Permet d'activer le module Welcome.`)
+    .setDMPermission(false)
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .addChannelOption((option) =>
       option

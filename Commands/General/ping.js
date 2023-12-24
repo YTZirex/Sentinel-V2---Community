@@ -8,7 +8,8 @@ const {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("ping")
-    .setDescription("Permet de voir la latence du bot et du client."),
+    .setDescription("Permet de voir la latence du bot et du client.")
+    .setDMPermission(false),
   async execute(interaction, client) {
     await interaction.deferReply();
     const reply = await interaction.fetchReply();

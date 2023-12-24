@@ -7,6 +7,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("virement")
     .setDescription(`Permet de faire un virement à un autre utilisateur.`)
+    .setDMPermission(false)
     .addUserOption((option) =>
       option
         .setName("utilisateur")

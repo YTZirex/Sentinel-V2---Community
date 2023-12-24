@@ -8,6 +8,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("pole-emploi")
     .setDescription(`Permet de récupérer un travail.`)
+    .setDMPermission(false)
     .addStringOption((option) =>
       option
         .setName("metier")

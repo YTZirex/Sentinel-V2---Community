@@ -6,7 +6,8 @@ const EconomySchema = require("../../Models/Economy");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("supprimer-compte")
-    .setDescription(`Permet de supprimer votre compte bancaire.`),
+    .setDescription(`Permet de supprimer votre compte bancaire.`)
+    .setDMPermission(false),
   async execute(interaction) {
     const guildModulesRecord = await guildModules.findOne({
       guild: interaction.guild.id,

@@ -6,6 +6,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("help")
     .setDescription(`Permet de voir la liste des commandes.`)
+    .setDMPermission(false)
     .addStringOption((option) =>
       option
         .setName("categorie")
