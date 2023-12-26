@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 const EconomySchema = require("../../Models/Economy");
 const JobSchema = require("../../Models/Job");
-const guildModuleSchema = require('../../Models/GuildModules');
+const guildModuleSchema = require("../../Models/GuildModules");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -44,7 +44,11 @@ module.exports = {
             value: "detective",
           },
           {
-            name: "5000€ - Cosmonaute",
+            name: "5 000€ - Pilote d'avion",
+            value: "pilote",
+          },
+          {
+            name: "10 000€ - Cosmonaute",
             value: "cosmonaute",
           }
         )
@@ -60,16 +64,18 @@ module.exports = {
 
     const guildModulesRecord = await guildModuleSchema.findOne({
       guild: interaction.guild.id,
-    })
+    });
 
     const moduleDisabled = new EmbedBuilder().setColor("Red");
     if (guildModulesRecord) {
       if (guildModulesRecord.economy == false) {
-        moduleDisabled.setDescription(`Le module \`Economy\` est désactivé sur ce serveur. Veuillez exécuter la commande dans un autre serveur ou dans notre Support.`)
+        moduleDisabled.setDescription(
+          `Le module \`Economy\` est désactivé sur ce serveur. Veuillez exécuter la commande dans un autre serveur ou dans notre Support.`
+        );
         await interaction.reply({
           embeds: [moduleDisabled],
-          ephemeral: true
-        })
+          ephemeral: true,
+        });
         return;
       }
     }
@@ -103,8 +109,11 @@ module.exports = {
       case "detective":
         prix = 3000;
         break;
-      case "cosmonaute":
+      case "pilote":
         prix = 5000;
+        break;
+      case "cosmonaute":
+        prix = 10000;
         break;
     }
 

@@ -26,6 +26,10 @@ Détective:
     Unlock: 3000,
     Salaire: 390,
 
-Cosmonaute: 
+Pilote d'avion:
     Unlock: 5000,
     Salaire: 500
+
+Cosmonaute: 
+    Unlock: 10000,
+    Salaire: 1000

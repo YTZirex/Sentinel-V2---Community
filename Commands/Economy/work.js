@@ -71,8 +71,11 @@ module.exports = {
         case "detective":
           salaire = 390;
           break;
-        case "cosmonaute":
+        case "pilote":
           salaire = 500;
+          break;
+        case "cosmonaute":
+          salaire = 1000;
           break;
       }
 
